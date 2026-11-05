@@ -5,6 +5,7 @@ import {
   type PDFDocumentProxy,
 } from "pdfjs-dist";
 import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
+import { ScreenReaderText } from "../Shared/ScreenReaderText/ScreenReaderText";
 import { Viewer } from "./PdfPreview.styles";
 GlobalWorkerOptions.workerSrc = workerUrl;
 export default function PdfPreview({
@@ -22,6 +23,7 @@ export default function PdfPreview({
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
   const [document, setDocument] = useState<PDFDocumentProxy | null>(null);
+  const [pageText, setPageText] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -56,18 +58,29 @@ export default function PdfPreview({
       | ReturnType<Awaited<ReturnType<PDFDocumentProxy["getPage"]>>["render"]>
       | undefined;
     setLoading(true);
+    setPageText("");
     document
       .getPage(page)
-      .then((pdfPage) => {
+      .then(async (pdfPage) => {
+        const text = await pdfPage.getTextContent();
+        if (cancelled) return;
+        setPageText(
+          text.items
+            .map((item) =>
+              "str" in item ? item.str + (item.hasEOL ? "\n" : " ") : "",
+            )
+            .join(""),
+        );
         const el = canvas.current;
         if (cancelled || !el) return;
-        const viewport = pdfPage.getViewport({ scale: Math.max(2, window.devicePixelRatio) });
+        const viewport = pdfPage.getViewport({
+          scale: Math.max(2, window.devicePixelRatio),
+        });
         el.width = viewport.width;
         el.height = viewport.height;
         const context = el.getContext("2d")!;
         if (bolder) {
           const fillText = context.fillText;
-          // Stroke each text glyph without changing the PDF's character spacing.
           context.fillText = function (text, x, y, maxWidth) {
             this.save();
             this.strokeStyle = this.fillStyle;
@@ -79,7 +92,9 @@ export default function PdfPreview({
             if (maxWidth === undefined) fillText.call(this, text, x, y);
             else fillText.call(this, text, x, y, maxWidth);
           };
-          restoreTextRendering = () => { context.fillText = fillText; };
+          restoreTextRendering = () => {
+            context.fillText = fillText;
+          };
         }
         renderTask = pdfPage.render({
           canvasContext: context,
@@ -114,10 +129,18 @@ export default function PdfPreview({
       ) : (
         <>
           {loading && <p role="status">Loading screenplay...</p>}
+          {!loading && (
+            <ScreenReaderText
+              role="document"
+              aria-label={`Screenplay text, page ${page}`}
+            >
+              {pageText ||
+                "This page contains an image with no extractable text."}
+            </ScreenReaderText>
+          )}
           <canvas
             ref={canvas}
-            role="img"
-            aria-label={`Screenplay preview, page ${page}`}
+            aria-hidden="true"
             style={{ display: loading ? "none" : "block" }}
           />
         </>

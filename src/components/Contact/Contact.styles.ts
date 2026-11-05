@@ -8,18 +8,18 @@ export const Section = styled.section`
 
 export const Layout = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.6fr) minmax(180px, 1fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   align-items: center;
-  gap: 60px;
+  gap: clamp(32px, 6vw, 90px);
 
-  @media (max-width: 650px) {
+  @media (max-width: 850px) {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 28px;
   }
 `;
 
 export const Copy = styled.div`
-  max-width: 610px;
+  max-width: 680px;
 
   h2 {
     font-size: 14px;
@@ -45,46 +45,55 @@ export const Copy = styled.div`
 `;
 
 export const Links = styled.nav`
+  min-width: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
-  justify-self: center;
+  gap: 24px;
+  border-left: 1px solid #ffffff26;
+  padding-left: clamp(24px, 3vw, 44px);
 
-  a, span {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 17px;
-    min-height: 44px;
-    padding: 12px 18px;
-    border: 1px solid #ffffff20;
-    border-radius: 8px;
-    background: #ffffff04;
+  @media (max-width: 850px) {
+    border-left: 0;
+    padding-left: 0;
+    gap: 20px;
   }
 
   a {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 68px;
+    padding: 8px 4px;
     color: #f4edde;
-    transition: border-color 0.2s, background 0.2s;
+    transition: color 0.2s;
 
-    svg {
+    > svg {
+      flex-shrink: 0;
       color: var(--color-gold);
     }
 
-    &:hover {
-      border-color: var(--color-gold);
-      background: #e7b5520c;
+    > span {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
     }
-  }
 
-  span {
-    color: #b7b7ae;
-  }
+    small {
+      color: #b7b7ae;
+      font-size: 13px;
+    }
 
-  @media (max-width: 650px) {
-    justify-self: start;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 14px;
+    span > span {
+      font-size: clamp(16px, 1.4vw, 20px);
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    &:hover,
+    &:focus-visible {
+      color: var(--color-gold);
+    }
   }
 `;

@@ -1,4 +1,3 @@
-// Films use author-provided content. Screenplays remain mockup demos.
 export const films = [
   {
     id: "the-milk",
@@ -35,10 +34,9 @@ export const films = [
 ] as {
   id: string;
   title: string;
-  year?: string;
   description: string;
-  image: string | null;
-  youtubeUrl: string | null;
+  image: string;
+  youtubeUrl: string;
 }[];
 export const screenplays = [
   {
@@ -51,7 +49,6 @@ export const screenplays = [
     previewPdf: `${import.meta.env.BASE_URL}screenplays/bloodstock-pilot-teaser.pdf`,
     pageCount: 13,
     fullTeaser: true,
-    demo: false,
   },
   {
     id: "the-milk-script",
@@ -61,7 +58,6 @@ export const screenplays = [
     cover: `${import.meta.env.BASE_URL}images/the-milk-poster.png`,
     previewPdf: `${import.meta.env.BASE_URL}screenplays/the-milk-preview.pdf`,
     pageCount: 10,
-    demo: false,
   },
   {
     id: "carmilla",
@@ -71,28 +67,21 @@ export const screenplays = [
       "Styria, Austria, 1872. Laura's secluded life changes when a mysterious young woman arrives after a carriage accident. A stage adaptation of Sheridan Le Fanu's novella.",
     previewPdf: `${import.meta.env.BASE_URL}screenplays/carmilla-preview.pdf`,
     pageCount: 10,
-    demo: false,
-  },
-  {
-    id: "ground",
-    title: "Brighter Ground",
-    genre: "Feature  |  Drama",
-    description:
-      "After a career-ending injury, a former Olympic runner returns home to coach a group of misfit teens and rediscovers what she’s been running from.",
-    previewPdf: `${import.meta.env.BASE_URL}screenplays/brighter-ground-preview.pdf`,
   },
 ] as {
   id: string;
   title: string;
   genre: string;
   description: string;
-  previewPdf: string | null;
-  pageCount?: number;
+  previewPdf: string;
+  pageCount: number;
   fullTeaser?: boolean;
   cover?: string;
-  demo?: boolean;
 }[];
-export const contact = { email: "graceoliviadarling@gmail.com", instagram: "https://www.instagram.com/gracedarlin.g/" } as {
-  email: string | null;
-  instagram: string | null;
+export const contact = {
+  email: "graceoliviadarling@gmail.com",
+  instagram: "https://www.instagram.com/gracedarlin.g/",
+} as {
+  email: string;
+  instagram: string;
 };

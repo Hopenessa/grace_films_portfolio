@@ -27,7 +27,10 @@ export const Layout = styled.div`
 export const Item = styled.article<{ $active: boolean }>`
   cursor: pointer;
   transition: background 0.2s ease;
-  &:hover, &:focus-within { background: rgba(231, 181, 82, 0.035); }
+  &:hover,
+  &:focus-within {
+    background: rgba(231, 181, 82, 0.035);
+  }
   position: relative;
   padding: 14px 10px 16px 20px;
   border-bottom: 1px solid #383a32;
@@ -46,7 +49,7 @@ export const Item = styled.article<{ $active: boolean }>`
   }
   p {
     color: #b7b7ae;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.55;
     margin-top: 8px;
   }
@@ -60,13 +63,13 @@ export const Select = styled.button`
   padding: 0;
   align-items: center;
   h3 {
-    font-size: 17px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
   }
   small {
-    font-size: 9px;
+    font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #aaa99f;
@@ -84,7 +87,7 @@ export const Links = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin-top: 10px;
-  font-size: 12px;
+  font-size: 14px;
   a {
     display: flex;
     align-items: center;
@@ -96,7 +99,7 @@ export const Links = styled.div`
   }
   span {
     font-size: 11px;
-    color: #888c80;
+    color: #aaa99f;
   }
 `;
 export const Paper = styled.div`
@@ -111,14 +114,19 @@ export const Paper = styled.div`
 `;
 export const Toolbar = styled.div`
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
   padding-bottom: 12px;
   border-bottom: 1px solid #383a32;
-  font-size: 13px;
+  font-size: 14px;
+  > span {
+    overflow-wrap: anywhere;
+  }
   div {
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -130,29 +138,12 @@ export const Toolbar = styled.div`
   button {
     border: 1px solid #42463b;
     border-radius: 50%;
-    width: 31px;
-    height: 31px;
+    width: 36px;
+    height: 36px;
     display: grid;
     place-items: center;
     color: var(--color-gold);
   }
-`;
-export const Script = styled.div`
-  font-family: "Courier New", monospace;
-  font-size: 12px;
-  line-height: 1.9;
-  color: #e4e0d5;
-  white-space: pre-wrap;
-  padding: 20px 4px;
-  min-height: 285px;
-`;
-export const Demo = styled.p`
-  padding-top: 8px;
-  flex-shrink: 0;
-  font-size: 10px;
-  color: #aaa99f;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 `;
 
 export const Cover = styled.img`
@@ -163,24 +154,15 @@ export const Cover = styled.img`
   object-fit: contain;
   margin: 0 auto;
 `;
-export const Pending = styled.p`
-  font-size: 12px;
-  line-height: 1.8;
-  color: #aaa99f;
-  margin-top: 14px;
-`;
-
 
 export const List = styled.div`
   min-height: 0;
   display: flex;
   flex-direction: column;
 
-  > [role="tablist"] {
+  > [role="group"] {
     min-height: 0;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #6c6655 transparent;
   }
 `;
 
@@ -225,14 +207,16 @@ export const PageSurface = styled.div<{ $expanded: boolean }>`
     justify-content: center;
 
     canvas {
-      width: ${p => p.$expanded ? "100%" : "auto"};
-      height: ${p => p.$expanded ? "auto" : "100%"};
+      width: ${(p) => (p.$expanded ? "100%" : "auto")};
+      height: ${(p) => (p.$expanded ? "auto" : "100%")};
       max-width: 100%;
       object-fit: contain;
     }
   }
 
-  ${p => p.$expanded && `
+  ${(p) =>
+    p.$expanded &&
+    `
     display: block;
 
     > div {
@@ -252,7 +236,9 @@ export const PageSurface = styled.div<{ $expanded: boolean }>`
       height: auto;
       max-height: 420px;
     }
-    ${p => !p.$expanded && `
+    ${(p) =>
+      !p.$expanded &&
+      `
       > div canvas {
         width: 100%;
         height: auto;
@@ -285,13 +271,12 @@ export const ReaderDialog = styled.dialog`
   }
 `;
 
-
 export const PageSheet = styled.div<{ $width: number; $warm: boolean }>`
-  width: ${p => p.$width}px;
+  width: ${(p) => p.$width}px;
   aspect-ratio: 1 / 1.41421356237;
   margin: 0 auto;
   flex: none;
-  background: ${p => p.$warm ? "#e6d8b8" : "#fff"};
+  background: ${(p) => (p.$warm ? "#e6d8b8" : "#fff")};
 
   > div {
     width: 100%;
@@ -329,7 +314,6 @@ export const ZoomControls = styled.div`
     padding: 4px 8px;
   }
 `;
-
 
 export const PageColors = styled.div`
   display: inline-flex;

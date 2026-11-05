@@ -8,7 +8,7 @@ export const Viewer = styled.div<{ $warm: boolean }>`
     width: 100%;
     height: auto;
     background: #fff;
-    filter: ${p => p.$warm ? "sepia(0.48) brightness(0.90)" : "none"};
+    filter: ${(p) => (p.$warm ? "sepia(0.48) brightness(0.90)" : "none")};
   }
   p {
     font-size: 13px;

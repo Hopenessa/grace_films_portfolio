@@ -1,4 +1,4 @@
-import { Container } from "../Shared/Container";
+import { Container } from "../Shared/Container/Container";
 import { Foot, Row } from "./Footer.styles";
 
 export default function Footer() {

@@ -11,8 +11,20 @@ export default function App() {
   return (
     <>
       <GlobalStyle />
+      <a
+        className="skip-link"
+        href="#main-content"
+        onClick={(event) => {
+          event.preventDefault();
+          const main = document.getElementById("main-content");
+          main?.focus({ preventScroll: true });
+          main?.scrollIntoView({ block: "start" });
+        }}
+      >
+        Skip to main content
+      </a>
       <Header />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Opening id="home">
           <Hero />
         </Opening>

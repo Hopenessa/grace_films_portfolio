@@ -11,15 +11,6 @@ export const Heading = styled.div`
   gap: 20px;
   margin-bottom: 20px;
 `;
-export const Note = styled.span`
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #aaa99f;
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
 export const Track = styled.div`
   display: flex;
   gap: 24px;
@@ -54,8 +45,8 @@ export const Card = styled.article<{ $active: boolean }>`
   }
   padding-top: ${(p) => (p.$active ? "0" : "10px")};
   h3 {
-    font-size: ${(p) => (p.$active ? "20" : "15")}px;
-    font-weight: 400;
+    font-size: ${(p) => (p.$active ? "22" : "17")}px;
+    font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
     transition: font-size 0.3s;
@@ -90,17 +81,6 @@ export const Preview = styled.div`
     transform: scale(1.01);
     filter: brightness(1);
   }
-
-  em {
-    position: absolute;
-    right: 8px;
-    top: 8px;
-    font-size: 9px;
-    font-style: normal;
-    padding: 4px 7px;
-    background: #111b;
-    color: #ddd7c8;
-  }
 `;
 export const Meta = styled.div`
   display: flex;
@@ -108,17 +88,13 @@ export const Meta = styled.div`
   gap: 10px;
   align-items: baseline;
   margin-top: 12px;
-  time {
-    font-size: 12px;
-    color: #b7b7ae;
-  }
 `;
 export const FilmCopy = styled.div`
   margin-top: 14px;
 
   > span {
     color: #aaa99f;
-    font-size: 10px;
+    font-size: 12px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
   }
@@ -130,7 +106,7 @@ export const FilmCopy = styled.div`
 
 export const FilmCounter = styled.span`
   color: #b7b7ae;
-  font-size: 12px;
+  font-size: 13px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 `;
@@ -178,42 +154,6 @@ export const Arrows = styled.div`
   }
 `;
 
-export const PreviewPlaceholder = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 18px;
-  text-align: center;
-  background: radial-gradient(ellipse at 50% 25%, #30342b 0, #191d18 65%);
-  box-shadow: inset 0 0 0 1px rgb(231 181 82 / 0.15);
-  &::before {
-    content: "";
-    width: 48px;
-    height: 1px;
-    background: var(--color-gold);
-  }
-  strong {
-    font-family: Manrope, sans-serif;
-    font-size: clamp(18px, 1.7vw, 28px);
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    line-height: 1.4;
-    color: #e9dfc9;
-  }
-  small {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #b6ad99;
-    line-height: 1.8;
-  }
-`;
-
 export const SelectCard = styled.button`
   display: block;
   width: 100%;
@@ -239,8 +179,8 @@ export const Details = styled.div`
   align-items: center;
   gap: 8px;
   margin-top: 8px;
-  color: #b7b7ae;
-  font-size: 12px;
+  color: #a2a598;
+  font-size: 15px;
 
   ${SelectCard}:hover &,
   ${SelectCard}:focus-visible & {
@@ -261,7 +201,9 @@ export const WatchBadge = styled.span`
   color: var(--color-gold);
   font-size: 13px;
   font-weight: 600;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 
   ${Preview}:hover &,
   ${Preview}:focus-visible & {

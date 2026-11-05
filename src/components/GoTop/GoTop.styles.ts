@@ -17,7 +17,9 @@ export const TopButton = styled.button`
   color: var(--color-gold);
   font-size: 13px;
   box-shadow: 0 4px 20px #0004;
-  transition: background 0.2s, color 0.2s;
+  transition:
+    background 0.2s,
+    color 0.2s;
 
   &:hover {
     background: var(--color-gold);

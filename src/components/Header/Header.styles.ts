@@ -3,10 +3,15 @@ export const Bar = styled.header<{ $scrolled: boolean; $menuOpen: boolean }>`
   position: fixed;
   inset: 0 0 auto;
   z-index: 50;
-  background: ${({ $scrolled, $menuOpen }) => ($scrolled || $menuOpen ? "rgba(25, 28, 24, .94)" : "transparent")};
+  background: ${({ $scrolled, $menuOpen }) =>
+    $scrolled || $menuOpen ? "rgba(25, 28, 24, .94)" : "transparent"};
   backdrop-filter: ${({ $scrolled }) => ($scrolled ? "blur(18px)" : "none")};
-  -webkit-backdrop-filter: ${({ $scrolled }) => ($scrolled ? "blur(18px)" : "none")};
-  box-shadow: ${({ $scrolled }) => ($scrolled ? "0 8px 28px rgba(0,0,0,.2), inset 0 -1px rgba(231,181,82,.16)" : "0 8px 28px transparent, inset 0 -1px transparent")};
+  -webkit-backdrop-filter: ${({ $scrolled }) =>
+    $scrolled ? "blur(18px)" : "none"};
+  box-shadow: ${({ $scrolled }) =>
+    $scrolled
+      ? "0 8px 28px rgba(0,0,0,.2), inset 0 -1px rgba(231,181,82,.16)"
+      : "0 8px 28px transparent, inset 0 -1px transparent"};
   transition:
     background 0.25s ease,
     box-shadow 0.25s ease,

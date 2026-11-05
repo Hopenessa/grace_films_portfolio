@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef, useState } from "react";
 import { taperedArc } from "./Hero.geometry";
-import { Container } from "../Shared/Container";
+import { Container } from "../Shared/Container/Container";
 import {
   Section,
   Layout,
@@ -8,6 +8,7 @@ import {
   Tagline,
   Portrait,
   SideNote,
+  StoryNote,
   Geometry,
 } from "./Hero.styles";
 export default function Hero() {
@@ -59,26 +60,28 @@ export default function Hero() {
   }, []);
   return (
     <Section id="intro">
+      <StoryNote aria-hidden="true" />
       <Container>
         <Layout>
           <Text>
-            <h1>
-              Make room
+            <h1 tabIndex={-1}>
+              Grace
               <br />
-              for a story<span>.</span>
+              <span>Darling</span>
             </h1>
             <p>
-              I’m a director and screenwriter drawn to the people, places and
-              in-between moments that reveal what it means to be human.
+              I’m a director and writer working across film and theatre, with a
+              focus on queer horror and drama. My approach is character-focused,
+              and I often explore body horror and surrealism to discuss themes
+              of identity, repression, and desire.
             </p>
             <p>
-              I am interested in the extraordinary beneath the ordinary: a quiet
-              encounter, an unexpected turn, the moment a familiar world begins
-              to change. Through film and the written page, I explore the
-              stories we carry, the choices we make, and what connects us to one
-              another.
+              I’m drawn to work that combines emotional intimacy with unsettling
+              imagery and atmosphere. I’m interested in how horror can express a
+              character’s inner experience, and how experimental storytelling
+              can make that experience engaging for an audience.
             </p>
-            <Tagline>CHARACTER / CINEMA / A KINDER TOMORROW</Tagline>
+            <Tagline aria-hidden="true" />
           </Text>
           <Portrait>
             <Geometry
@@ -114,13 +117,9 @@ export default function Hero() {
             </Geometry>
             <img
               src={`${import.meta.env.BASE_URL}images/Grace.webp`}
-              alt="Grace, director and screenwriter"
+              alt="Grace Darling, director and writer"
             />
-            <SideNote>
-              BIG QUESTIONS.
-              <br />
-              HUMAN STORIES.
-            </SideNote>
+            <SideNote aria-hidden="true" />
           </Portrait>
         </Layout>
       </Container>

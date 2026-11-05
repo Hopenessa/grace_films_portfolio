@@ -50,8 +50,6 @@ function positionAtY(y: number) {
   }
   return (low + high) / 2;
 }
-// A filled ribbon changes its actual width near each opening, without
-// changing the shared centreline or fading the gold colour.
 export function taperedArc(gap: Gap): string {
   const sections =
     gap.height > 0

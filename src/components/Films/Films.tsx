@@ -2,16 +2,15 @@ import { Fragment } from "react";
 import { useState, useRef, useEffect } from "react";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { films } from "../../data/portfolio";
-import { Container } from "../Shared/Container";
-import SectionHeading from "../Shared/SectionHeading";
+import { Container } from "../Shared/Container/Container";
+import { ScreenReaderText } from "../Shared/ScreenReaderText/ScreenReaderText";
+import SectionHeading from "../Shared/SectionHeading/SectionHeading";
 import {
   Section,
   Heading,
-  Note,
   Track,
   Card,
   Preview,
-  PreviewPlaceholder,
   SelectCard,
   Details,
   WatchBadge,
@@ -31,6 +30,12 @@ export default function Films() {
     const el = region.current;
     if (!el) return;
     const keyboard = (e: KeyboardEvent) => {
+      if ((e.target as HTMLElement).closest("dialog")) return;
+      if (
+        !el.contains(document.activeElement) &&
+        (e.target as HTMLElement).closest("a, button, input, textarea, select")
+      )
+        return;
       if (
         (!el.matches(":hover") && !el.contains(document.activeElement)) ||
         e.altKey ||
@@ -46,7 +51,16 @@ export default function Films() {
         return;
       if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
         e.preventDefault();
+        const restoreFocus =
+          document.activeElement?.closest("[data-film-card]");
         move(e.key === "ArrowRight" ? 1 : -1);
+        if (restoreFocus) {
+          requestAnimationFrame(() =>
+            el
+              .querySelector<HTMLAnchorElement>("a[data-selected-film]")
+              ?.focus({ preventScroll: true }),
+          );
+        }
       }
     };
     window.addEventListener("keydown", keyboard);
@@ -58,54 +72,33 @@ export default function Films() {
     .slice(0, films.length)
     .map((n) => films[(selected + n) % films.length]);
   return (
-    <Section
-      id="films"
-      ref={region}
-      tabIndex={0}
-      role="region"
-      aria-label="Films. Use left and right arrow keys to select a film."
-    >
+    <Section id="films" ref={region} role="region" aria-label="Films">
       <Container>
         <Heading>
           <SectionHeading
             title="Films"
-            description="Cinematic stories about real people in a changing world."
+            description="Character-driven horror and drama films."
           />
-          <Note>
-            Selected stories · {String(selected + 1).padStart(2, "0")} /{" "}
-            {String(films.length).padStart(2, "0")}
-          </Note>
         </Heading>
         <div>
           <Track>
             {visible.map((film, i) => {
               const active = i === 0;
-              const youtubeUrl =
-                film.youtubeUrl ??
-                `https://www.youtube.com/results?search_query=${encodeURIComponent(film.title + " short film")}`;
-              const preview = film.image ? (
+              const youtubeUrl = film.youtubeUrl;
+              const preview = (
                 <img
                   src={film.image}
                   alt={`${film.title} film preview`}
                   loading="lazy"
                 />
-              ) : (
-                <PreviewPlaceholder
-                  role="img"
-                  aria-label={`${film.title}: preview coming soon`}
-                >
-                  <strong>{film.title}</strong>
-                  <small>Preview coming soon</small>
-                </PreviewPlaceholder>
               );
               const title = (
                 <Meta>
                   <h3>{film.title}</h3>
-                  {film.year && <time>{film.year}</time>}
                 </Meta>
               );
               return (
-                <Card key={i} $active={active}>
+                <Card key={i} $active={active} data-film-card>
                   <Fragment key={film.id}>
                     {active ? (
                       <>
@@ -114,18 +107,27 @@ export default function Films() {
                           href={youtubeUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Watch ${film.title} on YouTube`}
+                          data-selected-film
+                          aria-describedby="selected-film-description"
+                          aria-label={`Watch ${film.title} on YouTube (opens in a new tab)`}
                         >
                           {preview}
                           <WatchBadge aria-hidden="true">
-                            <Play size={18} fill="currentColor" strokeWidth={0} />
+                            <Play
+                              aria-hidden="true"
+                              size={18}
+                              fill="currentColor"
+                              strokeWidth={0}
+                            />
                             Watch on YouTube
                           </WatchBadge>
                         </Preview>
                         <FilmCopy>
                           <span>Selected film</span>
                           {title}
-                          <p>{film.description}</p>
+                          <p id="selected-film-description">
+                            {film.description}
+                          </p>
                         </FilmCopy>
                       </>
                     ) : (
@@ -136,7 +138,13 @@ export default function Films() {
                           setSelected(
                             films.findIndex((item) => item.id === film.id),
                           );
-                          region.current?.focus({ preventScroll: true });
+                          requestAnimationFrame(() =>
+                            region.current
+                              ?.querySelector<HTMLAnchorElement>(
+                                "a[data-selected-film]",
+                              )
+                              ?.focus({ preventScroll: true }),
+                          );
                           requestAnimationFrame(() =>
                             region.current?.scrollIntoView({
                               block: "start",
@@ -148,7 +156,8 @@ export default function Films() {
                         <Preview>{preview}</Preview>
                         {title}
                         <Details>
-                          Film details <ChevronRight size={15} />
+                          Film details{" "}
+                          <ChevronRight aria-hidden="true" size={15} />
                         </Details>
                       </SelectCard>
                     )}
@@ -157,6 +166,10 @@ export default function Films() {
               );
             })}
           </Track>
+          <ScreenReaderText role="status" aria-live="polite" aria-atomic="true">
+            Selected film: {films[selected].title}. Film {selected + 1} of{" "}
+            {films.length}.
+          </ScreenReaderText>
           <Controls>
             <Dots>
               {films.map((f, i) => (
@@ -169,14 +182,15 @@ export default function Films() {
               ))}
             </Dots>
             <Arrows>
-              <FilmCounter aria-live="polite">
-                {String(selected + 1).padStart(2, "0")} / {String(films.length).padStart(2, "0")}
+              <FilmCounter aria-hidden="true">
+                {String(selected + 1).padStart(2, "0")} /{" "}
+                {String(films.length).padStart(2, "0")}
               </FilmCounter>
               <button aria-label="Previous film" onClick={() => move(-1)}>
-                <ChevronLeft size={18} />
+                <ChevronLeft aria-hidden="true" size={18} />
               </button>
               <button aria-label="Next film" onClick={() => move(1)}>
-                <ChevronRight size={18} />
+                <ChevronRight aria-hidden="true" size={18} />
               </button>
             </Arrows>
           </Controls>

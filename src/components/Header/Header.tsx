@@ -1,6 +1,6 @@
-import { useState, useEffect, type MouseEvent } from "react";
+import { useState, useEffect, useRef, type MouseEvent } from "react";
 import { Menu, X } from "lucide-react";
-import { Container } from "../Shared/Container";
+import { Container } from "../Shared/Container/Container";
 import { Bar, Row, Logo, Nav, MenuButton } from "./Header.styles";
 const navigation = [
   ["Home", "home"],
@@ -9,7 +9,15 @@ const navigation = [
   ["Contact", "contact"],
 ];
 export default function Header() {
+  const menuButton = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (!open) return;
+    const frame = requestAnimationFrame(() =>
+      document.querySelector<HTMLAnchorElement>("#main-navigation a")?.focus(),
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [open]);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 24);
   const [active, setActive] = useState("home");
   useEffect(() => {
@@ -62,12 +70,30 @@ export default function Header() {
       .matches
       ? "instant"
       : "smooth";
+    requestAnimationFrame(() => {
+      document
+        .getElementById(id)
+        ?.querySelector<HTMLElement>("h1, h2")
+        ?.focus({ preventScroll: true });
+    });
     if (id === "home") window.scrollTo({ top: 0, behavior });
     else
       document.getElementById(id)?.scrollIntoView({ block: "start", behavior });
   };
   return (
-    <Bar $scrolled={scrolled} $menuOpen={open}>
+    <Bar
+      $scrolled={scrolled}
+      $menuOpen={open}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) {
+          setOpen(false);
+          menuButton.current?.focus();
+        }
+      }}
+    >
       <Container>
         <Row>
           <Logo
@@ -80,7 +106,7 @@ export default function Header() {
               alt="Gold Mustang Studio"
             />
           </Logo>
-          <Nav $open={open} aria-label="Main navigation">
+          <Nav id="main-navigation" $open={open} aria-label="Main navigation">
             {navigation.map(([label, id]) => (
               <a
                 key={id}
@@ -93,11 +119,13 @@ export default function Header() {
             ))}
           </Nav>
           <MenuButton
+            ref={menuButton}
+            aria-controls="main-navigation"
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
           >
-            {open ? <X /> : <Menu />}
+            {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </MenuButton>
         </Row>
       </Container>
