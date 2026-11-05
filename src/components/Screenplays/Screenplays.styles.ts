@@ -179,8 +179,6 @@ export const List = styled.div`
   > [role="tablist"] {
     min-height: 0;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #6c6655 transparent;
   }
 `;
 

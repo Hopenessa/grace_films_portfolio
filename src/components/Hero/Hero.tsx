@@ -63,22 +63,23 @@ export default function Hero() {
         <Layout>
           <Text>
             <h1>
-              Make room
+              Grace
               <br />
-              for a story<span>.</span>
+              <span>Darling</span>
             </h1>
             <p>
-              I’m a director and screenwriter drawn to the people, places and
-              in-between moments that reveal what it means to be human.
+              I’m a director and writer working across film and theatre, with a
+              focus on queer horror and drama. My approach is character-focused,
+              and I often explore body horror and surrealism to discuss themes
+              of identity, repression, and desire.
             </p>
             <p>
-              I am interested in the extraordinary beneath the ordinary: a quiet
-              encounter, an unexpected turn, the moment a familiar world begins
-              to change. Through film and the written page, I explore the
-              stories we carry, the choices we make, and what connects us to one
-              another.
+              I’m drawn to work that combines emotional intimacy with unsettling
+              imagery and atmosphere. I’m interested in how horror can express a
+              character’s inner experience, and how experimental storytelling can
+              make that experience engaging for an audience.
             </p>
-            <Tagline>CHARACTER / CINEMA / A KINDER TOMORROW</Tagline>
+            <Tagline>CHARACTER / HORROR / DRAMA</Tagline>
           </Text>
           <Portrait>
             <Geometry
@@ -117,9 +118,9 @@ export default function Hero() {
               alt="Grace, director and screenwriter"
             />
             <SideNote>
-              BIG QUESTIONS.
+              ART SHOULD
               <br />
-              HUMAN STORIES.
+              UNSETTLE US.
             </SideNote>
           </Portrait>
         </Layout>

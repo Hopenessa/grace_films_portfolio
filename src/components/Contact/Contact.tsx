@@ -9,11 +9,10 @@ export default function Contact() {
         <Layout>
           <Copy>
             <h2 id="contact-heading">Contact</h2>
-            <h3>Let’s bring a story to life.</h3>
+            <h3>Interested in working together?</h3>
             <p>
-              Have a film in mind, a screenplay to explore, or a story worth
-              telling? I’d love to hear from you. Get in touch to talk about
-              directing, writing, and creative collaborations.
+              For inquiries about script availability, rights, or developing a
+              project together, please get in touch.
             </p>
           </Copy>
           <Links aria-label="Get in touch">

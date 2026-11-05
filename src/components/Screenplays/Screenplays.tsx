@@ -218,7 +218,7 @@ export default function Screenplays() {
       <Container>
         <SectionHeading
           title="Screenplays"
-          description="Original stories for film and television."
+          description="Original stories for film, television, and theatre."
         />
         <Layout>
           <List>

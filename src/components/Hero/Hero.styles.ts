@@ -1,7 +1,7 @@
 import styled from "styled-components";
 export const Section = styled.section`
   &::before {
-    content: "STORIES\\A MOVE US\\A FORWARD";
+    content: "FOR SCREEN.\\A FOR STAGE.";
     white-space: pre;
     position: absolute;
     top: 82px;

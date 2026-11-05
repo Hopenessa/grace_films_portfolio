@@ -69,7 +69,7 @@ export default function Films() {
         <Heading>
           <SectionHeading
             title="Films"
-            description="Cinematic stories about real people in a changing world."
+            description="Character-driven horror and drama films."
           />
           <Note>
             Selected stories · {String(selected + 1).padStart(2, "0")} /{" "}
